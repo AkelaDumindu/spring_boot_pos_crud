@@ -3,6 +3,10 @@ package com.akeladumindu.pos.api;
 
 import com.akeladumindu.pos.db.Database;
 import com.akeladumindu.pos.dto.request.RequestCustomerDto;
+import com.akeladumindu.pos.util.StandardResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,11 +14,16 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
 
     @PostMapping
-    public String createCustomer(
+    public ResponseEntity<StandardResponse> createCustomer(
             @RequestBody
             RequestCustomerDto customerDto
     ) {
-        return Database.createCustomer(customerDto).toString();
+        var savedData = Database.createCustomer(customerDto);
+        return new ResponseEntity<>(
+                new StandardResponse(201, "Customer Seved", savedData.toString()),
+                HttpStatus.CREATED
+        );
+
     }
 
     @PutMapping
