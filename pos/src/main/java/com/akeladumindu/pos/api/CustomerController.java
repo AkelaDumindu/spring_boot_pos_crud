@@ -38,9 +38,16 @@ public class CustomerController {
         );
     }
 
-    @DeleteMapping
-    public String deleteCustomer() {
-        return "Customer deleted";
+    @DeleteMapping(params = "id")
+    public ResponseEntity<StandardResponse> deleteCustomer(
+            @RequestParam int id
+
+    ) throws ClassNotFoundException {
+        Database.deleteCustomer(id);
+        return new ResponseEntity<>(
+                new StandardResponse(204, "Customer Deleted", null),
+                HttpStatus.NO_CONTENT
+        );
     }
 
     @GetMapping("/{id}")
