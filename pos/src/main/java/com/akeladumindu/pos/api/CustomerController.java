@@ -4,6 +4,7 @@ package com.akeladumindu.pos.api;
 import com.akeladumindu.pos.db.Database;
 import com.akeladumindu.pos.dto.request.RequestCustomerDto;
 import com.akeladumindu.pos.service.CustomerService;
+import com.akeladumindu.pos.service.impl.CustomerServiceImpl;
 import com.akeladumindu.pos.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,9 +61,9 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StandardResponse> findCustomer(@PathVariable int id) throws ClassNotFoundException {
+    public ResponseEntity<StandardResponse> findCustomer(@PathVariable long id) throws ClassNotFoundException {
         return new ResponseEntity<>(
-                new StandardResponse(200, "Customer Data", Database.findCustomer(id)),
+                new StandardResponse(200, "Customer Data", customerService.findCustomer(id)),
                 HttpStatus.OK
         );
     }

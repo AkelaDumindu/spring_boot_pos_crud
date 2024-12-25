@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 
@@ -75,8 +76,20 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResponseCustomerDto findCustomer(long id) {
-        return null;
+    public ResponseCustomerDto findCustomer(long id) throws ClassNotFoundException {
+        Optional<Customer> selectedCustomer = customerRepo.findByPublicId(id);
+
+        if (selectedCustomer.isPresent()) {
+            return new ResponseCustomerDto(
+                    selectedCustomer.get().getPublicId(),
+                    selectedCustomer.get().getName(),
+                    selectedCustomer.get().getAddress(),
+                    selectedCustomer.get().getSalary(),
+                    selectedCustomer.get().isActiveState()
+            );
+        }
+
+        throw new ClassNotFoundException();
     }
 
     @Override

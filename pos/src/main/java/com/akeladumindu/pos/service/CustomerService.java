@@ -9,6 +9,6 @@ public interface CustomerService {
     public ResponseCustomerDto createCustomer(RequestCustomerDto dto);
     public ResponseCustomerDto updateCustomer(RequestCustomerDto dto);
     public void deleteCustomer(RequestCustomerDto dto);
-    public ResponseCustomerDto findCustomer(long id);
+    public ResponseCustomerDto findCustomer(long id) throws ClassNotFoundException;
     public CustomerPaginatedDto searchAllCustomer(int page, int size, String searchText);
 }
