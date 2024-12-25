@@ -58,8 +58,15 @@ public class CustomerController {
         );
     }
 
-    @GetMapping("/list")
-    public String findAllCustomers() {
-        return "Customer find all";
+    @GetMapping(value = "/list", params = {"page","size","searchText"})
+    public ResponseEntity<StandardResponse> findAllCustomers(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam String searchText
+    ){
+        return new ResponseEntity<>(
+                new StandardResponse(200, "Customer List", Database.searchAllCustomer(page, size, searchText)),
+                HttpStatus.OK
+        );
     }
 }

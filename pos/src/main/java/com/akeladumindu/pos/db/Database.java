@@ -3,8 +3,10 @@ package com.akeladumindu.pos.db;
 import com.akeladumindu.pos.dto.core.CustomerDto;
 import com.akeladumindu.pos.dto.request.RequestCustomerDto;
 import com.akeladumindu.pos.dto.response.ResponseCustomerDto;
+import com.akeladumindu.pos.dto.response.pagenated.model.CustomerPaginatedDto;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -97,5 +99,25 @@ public class Database {
         }
         throw new ClassNotFoundException();
     }
+
+
+    public static CustomerPaginatedDto searchAllCustomer(int page, int size, String searchText)  {
+
+        List<ResponseCustomerDto> list = new ArrayList<>();
+
+        for (CustomerDto d : customerTable) {
+            list.add(new ResponseCustomerDto(
+                    d.getPublicId(),
+                    d.getName(),
+                    d.getAddress(),
+                    d.getSalary(),
+                    d.isActiveState()
+            ));
+        }
+
+        return new CustomerPaginatedDto(customerTable.size(), list);
+
+    }
+
 
 }
