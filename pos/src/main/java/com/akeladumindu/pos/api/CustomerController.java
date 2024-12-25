@@ -41,7 +41,7 @@ public class CustomerController {
             @RequestParam int id,
             @RequestBody RequestCustomerDto customerDto
     ) throws ClassNotFoundException {
-        var savedData = Database.updateCustomer(customerDto, id);
+        var savedData = customerService.updateCustomer(customerDto, id);
         return new ResponseEntity<>(
                 new StandardResponse(201, "Customer Updated", savedData),
                 HttpStatus.CREATED
@@ -53,7 +53,7 @@ public class CustomerController {
             @RequestParam int id
 
     ) throws ClassNotFoundException {
-        Database.deleteCustomer(id);
+        customerService.deleteCustomer(id);
         return new ResponseEntity<>(
                 new StandardResponse(204, "Customer Deleted", null),
                 HttpStatus.NO_CONTENT
@@ -75,7 +75,7 @@ public class CustomerController {
             @RequestParam String searchText
     ){
         return new ResponseEntity<>(
-                new StandardResponse(200, "Customer List", Database.searchAllCustomer(page, size, searchText)),
+                new StandardResponse(200, "Customer List", customerService.searchAllCustomer(page, size, searchText)),
                 HttpStatus.OK
         );
     }

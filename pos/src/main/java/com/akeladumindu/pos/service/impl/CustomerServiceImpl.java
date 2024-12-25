@@ -11,6 +11,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -66,13 +68,28 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResponseCustomerDto updateCustomer(RequestCustomerDto dto) {
-        return null;
+    public ResponseCustomerDto updateCustomer(RequestCustomerDto dto, long id) throws ClassNotFoundException {
+        Optional<Customer> selectedCustomer = customerRepo.findByPublicId(id);
+        if(selectedCustomer.isEmpty()) throw new ClassNotFoundException();
+                 selectedCustomer.get().setName(dto.getName());
+                selectedCustomer.get().setAddress(dto.getAddress());
+                selectedCustomer.get().setSalary(dto.getSalary());
+
+                customerRepo.save(selectedCustomer.get());
+        return new ResponseCustomerDto(
+                selectedCustomer.get().getPublicId(),
+                selectedCustomer.get().getName(),
+                selectedCustomer.get().getAddress(),
+                selectedCustomer.get().getSalary(),
+                selectedCustomer.get().isActiveState()
+        );
+
+
     }
 
     @Override
-    public void deleteCustomer(RequestCustomerDto dto) {
-
+    public void deleteCustomer(long id) {
+            customerRepo.deleteByPublicId(id);
     }
 
     @Override
@@ -94,6 +111,24 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerPaginatedDto searchAllCustomer(int page, int size, String searchText) {
-        return null;
+        List<Customer> customers = customerRepo.findAll();
+
+        List<ResponseCustomerDto> list = new ArrayList<>();
+        long recordCount = customerRepo.count();
+
+        for (Customer d : customers) {
+            list.add(new ResponseCustomerDto(
+                    d.getPublicId(),
+                    d.getName(),
+                    d.getAddress(),
+                    d.getSalary(),
+                    d.isActiveState()
+            ));
+        }
+
+        return new CustomerPaginatedDto(recordCount, list);
+
     }
+
+
 }
