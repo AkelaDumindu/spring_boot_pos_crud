@@ -9,8 +9,11 @@ import com.akeladumindu.pos.repo.CustomerRepo;
 import com.akeladumindu.pos.service.CustomerService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -111,8 +114,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerPaginatedDto searchAllCustomer(int page, int size, String searchText) {
-        List<Customer> customers = customerRepo.findAll();
-
+//        List<Customer> customers = customerRepo.findAll();
+        Page<Customer> customers = customerRepo.searchAllByAddressOrName(searchText, PageRequest.of(page, size));
         List<ResponseCustomerDto> list = new ArrayList<>();
         long recordCount = customerRepo.count();
 
