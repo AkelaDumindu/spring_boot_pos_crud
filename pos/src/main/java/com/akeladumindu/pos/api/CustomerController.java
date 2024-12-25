@@ -36,9 +36,12 @@ public class CustomerController {
         return "Customer deleted";
     }
 
-    @GetMapping
-    public String findCustomer() {
-        return "find customer";
+    @GetMapping("/{id}")
+    public ResponseEntity<StandardResponse> findCustomer(@PathVariable int id) throws ClassNotFoundException {
+        return new ResponseEntity<>(
+                new StandardResponse(200, "Customer Data", Database.findCustomer(id)),
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/list")
