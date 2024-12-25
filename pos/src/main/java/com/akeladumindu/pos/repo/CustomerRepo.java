@@ -21,4 +21,7 @@ public interface CustomerRepo extends JpaRepository<Customer,Integer> {
     @Query(value = "SELECT * FROM customer WHERE name LIKE %?1% OR address LIKE %?1%", nativeQuery = true)
     Page<Customer> searchAllByAddressOrName(String searchText, PageRequest pageable);
 
+    @Query(value = "SELECT count(id) * FROM customer WHERE name LIKE %?1% OR address LIKE %?1%", nativeQuery = true)
+    long countDataWithSearchText(String searchText);
+
 }

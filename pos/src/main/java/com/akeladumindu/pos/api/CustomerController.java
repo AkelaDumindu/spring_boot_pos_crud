@@ -1,7 +1,7 @@
 package com.akeladumindu.pos.api;
 
 
-import com.akeladumindu.pos.db.Database;
+
 import com.akeladumindu.pos.dto.request.RequestCustomerDto;
 import com.akeladumindu.pos.service.CustomerService;
 import com.akeladumindu.pos.service.impl.CustomerServiceImpl;

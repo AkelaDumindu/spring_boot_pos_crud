@@ -117,7 +117,7 @@ public class CustomerServiceImpl implements CustomerService {
 //        List<Customer> customers = customerRepo.findAll();
         Page<Customer> customers = customerRepo.searchAllByAddressOrName(searchText, PageRequest.of(page, size));
         List<ResponseCustomerDto> list = new ArrayList<>();
-        long recordCount = customerRepo.count();
+        long recordCount = customerRepo.countDataWithSearchText(searchText);
 
         for (Customer d : customers) {
             list.add(new ResponseCustomerDto(
