@@ -1,10 +1,8 @@
-package com.akeladumindu.pos.dto.entitiy;
+package com.akeladumindu.pos.entitiy;
 
-import com.akeladumindu.pos.dto.entitiy.process.FileResource;
+import com.akeladumindu.pos.entitiy.process.FileResource;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.sql.Blob;
 
 
 @Entity

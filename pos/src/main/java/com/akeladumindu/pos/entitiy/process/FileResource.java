@@ -1,4 +1,4 @@
-package com.akeladumindu.pos.dto.entitiy.process;
+package com.akeladumindu.pos.entitiy.process;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
