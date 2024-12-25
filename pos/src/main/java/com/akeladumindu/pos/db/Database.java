@@ -57,4 +57,30 @@ public class Database {
  throw new ClassNotFoundException();
 
     }
+
+    public static ResponseCustomerDto updateCustomer(RequestCustomerDto dto, int id) throws ClassNotFoundException {
+        Optional<CustomerDto> selectedCustomer = customerTable.stream()
+                .filter(e -> e.getPublicId() == id)
+                .findFirst();
+
+
+        if (selectedCustomer.isPresent()) {
+
+
+                    selectedCustomer.get().setName(dto.getName());
+                    selectedCustomer.get().setAddress(dto.getAddress());
+                    selectedCustomer.get().setSalary(dto.getSalary());
+
+
+            return new ResponseCustomerDto(
+                    selectedCustomer.get().getPublicId(),
+                    selectedCustomer.get().getName(),
+                    selectedCustomer.get().getAddress(),
+                    selectedCustomer.get().getSalary(),
+                    selectedCustomer.get().isActiveState()
+            );
+
+        }
+       throw new ClassNotFoundException();
+    }
 }

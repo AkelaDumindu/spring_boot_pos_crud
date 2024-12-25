@@ -20,15 +20,22 @@ public class CustomerController {
     ) {
         var savedData = Database.createCustomer(customerDto);
         return new ResponseEntity<>(
-                new StandardResponse(201, "Customer Seved", savedData.toString()),
+                new StandardResponse(201, "Customer Seved", savedData),
                 HttpStatus.CREATED
         );
 
     }
 
-    @PutMapping
-    public String updateCustomer() {
-        return "Customer updated";
+    @PutMapping(params = "id")
+    public  ResponseEntity<StandardResponse> updateCustomer(
+            @RequestParam int id,
+            @RequestBody RequestCustomerDto customerDto
+    ) throws ClassNotFoundException {
+        var savedData = Database.updateCustomer(customerDto, id);
+        return new ResponseEntity<>(
+                new StandardResponse(201, "Customer Updated", savedData),
+                HttpStatus.CREATED
+        );
     }
 
     @DeleteMapping
